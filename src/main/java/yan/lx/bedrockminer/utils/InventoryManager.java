@@ -18,13 +18,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
+import net.minecraft.server.network.packet.UpdateSelectedSlotC2SPacket;
 import net.minecraft.tag.FluidTags;
 
 public class InventoryManager {
     public static boolean switchToItem(ItemConvertible item) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
-        PlayerInventory playerInventory = minecraftClient.player.getInventory();
+        PlayerInventory playerInventory = minecraftClient.player.inventory;
 
         int i = playerInventory.getSlotWithStack(new ItemStack(item));
 
@@ -55,9 +55,9 @@ public class InventoryManager {
 
     public static boolean canInstantlyMinePiston() {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
-        PlayerInventory playerInventory = minecraftClient.player.getInventory();
+        PlayerInventory playerInventory = minecraftClient.player.inventory;
 
-        for (int i = 0; i < playerInventory.size(); i++) {
+        for (int i = 0; i < playerInventory.getInvSize(); i++) {
             if (getBlockBreakingSpeed(Blocks.PISTON.getDefaultState(), i) > 45f) {
                 return true;
             }
@@ -68,12 +68,12 @@ public class InventoryManager {
     private static float getBlockBreakingSpeed(BlockState block, int slot) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         PlayerEntity player = minecraftClient.player;
-        ItemStack stack = player.getInventory().getStack(slot);
+        ItemStack stack = player.inventory.getInvStack(slot);
 
-        float f = stack.getMiningSpeedMultiplier(block);
+        float f = stack.getMiningSpeed(block);
         if (f > 1.0F) {
             int i = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, stack);
-            ItemStack itemStack = player.getInventory().getStack(slot);
+            ItemStack itemStack = player.inventory.getInvStack(slot);
             if (i > 0 && !itemStack.isEmpty()) {
                 f += (float) (i * i + 1);
             }
@@ -103,11 +103,11 @@ public class InventoryManager {
             f *= k;
         }
 
-        if (player.isSubmergedIn(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
+        if (player.isSubmergedIn(FluidTags.WATER, true) && !EnchantmentHelper.hasAquaAffinity(player)) {
             f /= 5.0F;
         }
 
-        if (!player.isOnGround()) {
+        if (!player.onGround) {
             f /= 5.0F;
         }
 
@@ -116,12 +116,12 @@ public class InventoryManager {
 
     public static int getInventoryItemCount(ItemConvertible item) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
-        PlayerInventory playerInventory = minecraftClient.player.getInventory();
+        PlayerInventory playerInventory = minecraftClient.player.inventory;
         int counter = 0;
 
-        for (int i = 0; i < playerInventory.size(); i++) {
-            if (playerInventory.getStack(i).getItem() == new ItemStack(item).getItem()) {
-                counter = counter + playerInventory.getStack(i).getCount();
+        for (int i = 0; i < playerInventory.getInvSize(); i++) {
+            if (playerInventory.getInvStack(i).getItem() == new ItemStack(item).getItem()) {
+                counter = counter + playerInventory.getInvStack(i).getCount();
             }
         }
         return counter;

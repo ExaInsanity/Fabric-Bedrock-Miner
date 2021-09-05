@@ -7,8 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.server.network.packet.PlayerInteractBlockC2SPacket;
+import net.minecraft.server.network.packet.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +48,9 @@ public class BlockPlacer {
                         break;
                 }
 
-                minecraftClient.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(player.getYaw(1.0f), pitch, player.isOnGround()));
+                minecraftClient.getNetworkHandler().sendPacket(
+                        new PlayerMoveC2SPacket.LookOnly(player.getYaw(1.0f), pitch, player.onGround)
+                );
                 break;
         }
 

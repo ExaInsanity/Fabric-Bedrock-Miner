@@ -16,7 +16,7 @@ import java.util.ArrayList;
 //import java.util.List;
 
 public class BreakingFlowController {
-    private static ArrayList<TargetBlock> cachedTargetBlockList = new ArrayList<>();
+    private static ArrayList<TargetBlock> cachedTargetBlockList = new ArrayList<TargetBlock>();
 
     public static boolean isWorking() {
         return working;
@@ -30,7 +30,7 @@ public class BreakingFlowController {
 
     public static void addBlockPosToList(BlockPos pos) {
         ClientWorld world = MinecraftClient.getInstance().world;
-        if (world.getBlockState(pos).isOf(Blocks.BEDROCK)) {
+        if (world.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
             MinecraftClient minecraftClient = MinecraftClient.getInstance();
 
             String haveEnoughItems = InventoryManager.warningMessage();
@@ -104,7 +104,7 @@ public class BreakingFlowController {
         if (working){
             Messager.chat("");
             Messager.chat("Bedrock Miner已关闭。");
-            Messager.chat("Bedrock Miner stoped.");
+            Messager.chat("Bedrock Miner stopped.");
             Messager.chat("");
             working = false;
         } else {

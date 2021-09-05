@@ -16,7 +16,7 @@ public class Messager {
     public static void chat(String message){
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         Text text = new LiteralText(message);
-        minecraftClient.inGameHud.addChatMessage(MessageType.SYSTEM,text,minecraftClient.player.getUuid());
+        minecraftClient.inGameHud.addChatMessage(MessageType.SYSTEM,text);
     }
 }
 
