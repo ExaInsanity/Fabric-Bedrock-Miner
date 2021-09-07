@@ -1,7 +1,11 @@
 **English** | [中文](https://github.com/LXYan2333/Fabric-Bedrock-Miner/blob/main/README_中文.md)
 
 # Fabric-Bedrock-Miner
-A Fabric client mod to "mine" bedrock!
+A Fabric client mod to "mine" bedrock, backported to 1.15.1
+
+---
+
+This mod requires CarpetMod to be installed on the server and the  `missingTools` rule to be enabled.~~~~
 
 # Showcase
 https://www.youtube.com/watch?v=b8Y86yxjr_Y  

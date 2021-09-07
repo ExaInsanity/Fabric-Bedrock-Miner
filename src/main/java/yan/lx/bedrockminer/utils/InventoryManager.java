@@ -145,9 +145,9 @@ public class InventoryManager {
             return "黏液块不够啦！ Needs more slime block!";
         }
 
-        if (!InventoryManager.canInstantlyMinePiston()) {
+        /* if (!InventoryManager.canInstantlyMinePiston()) {
             return "无法秒破活塞！请确保效率Ⅴ+急迫Ⅱ Can't instantly mine piston! EfficiencyⅤ+HasteⅡ required!";
-        }
+        } */
         return null;
     }
 
